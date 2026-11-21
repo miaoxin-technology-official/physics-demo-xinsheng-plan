@@ -109,40 +109,91 @@
 
 ```text
 physics-demo-xinsheng-plan/
-├─ junior_high/                     # 初中
-│  ├─ mechanics/                    # 力学
+├─ junior_high/                        # 初中
+│  ├─ mechanics/                       # 力学
 │  │  ├─ lever_balance/
-│  │  │  └─ lever_balance_demo(Lili_Zhao)/     # 这是一个示例 实际可能不存在
+│  │  │  └─ lever_balance_demo(Lili_Zhao)/    # 课件目录示例，实际可能不存在
 │  │  │     ├─ lever_balance_demo.html
 │  │  │     ├─ README.md
 │  │  │     ├─ LICENSE
 │  │  │     └─ assets/
-│  │  └─ ...
-│  ├─ electricity/                  # 电学与电磁学
-│  ├─ thermal/                      # 热学
-│  ├─ optics/                       # 光学
-│  └─ sound/                        # 声学
-├─ senior_high/                     # 高中
-│  ├─ mechanics/                    # 力学
-│  ├─ electricity/                  # 电学
-│  ├─ electromagnetism/             # 电磁学
-│  ├─ thermal/                      # 热学
-│  ├─ optics/                       # 光学
-│  ├─ vibration_wave/               # 振动与波
-│  └─ modern_physics/               # 近代物理
+│  │  ├─ pulley_system/
+│  │  ├─ two_force_balance/
+│  │  ├─ inertia/
+│  │  ├─ buoyancy/
+│  │  ├─ liquid_pressure/
+│  │  └─ communicating_vessels/
+│  ├─ electricity/                     # 电学与电磁学
+│  │  ├─ series_parallel_circuit/
+│  │  ├─ sliding_rheostat/
+│  │  ├─ ammeter_voltmeter/
+│  │  ├─ ohms_law/
+│  │  ├─ household_circuit/
+│  │  └─ oersted_experiment/
+│  ├─ thermal/                         # 热学
+│  │  ├─ molecular_motion/
+│  │  ├─ state_change/
+│  │  └─ internal_combustion_engine/
+│  ├─ optics/                          # 光学
+│  │  ├─ convex_lens/
+│  │  ├─ plane_mirror/
+│  │  ├─ reflection_refraction/
+│  │  └─ vision_correction/
+│  └─ sound/                           # 声学
+│     ├─ sound_production/
+│     ├─ pitch_loudness/
+│     └─ echo/
+├─ senior_high/                        # 高中
+│  ├─ mechanics/                       # 力学
+│  │  ├─ projectile_motion/
+│  │  ├─ circular_motion/
+│  │  ├─ newton_laws/
+│  │  ├─ momentum_conservation/
+│  │  └─ mechanical_energy/
+│  ├─ electricity/                     # 电学
+│  │  ├─ electric_field_lines/
+│  │  ├─ electric_potential/
+│  │  ├─ capacitor/
+│  │  └─ charged_particle_in_field/
+│  ├─ electromagnetism/                # 电磁学
+│  │  ├─ magnetic_field/
+│  │  ├─ ampere_force/
+│  │  ├─ lorentz_force/
+│  │  ├─ electromagnetic_induction/
+│  │  ├─ lenz_law/
+│  │  └─ alternating_current/
+│  ├─ thermal/                         # 热学
+│  │  ├─ gas_laws/
+│  │  ├─ first_law_thermodynamics/
+│  │  └─ kinetic_theory/
+│  ├─ optics/                          # 光学
+│  │  ├─ light_interference/
+│  │  ├─ diffraction/
+│  │  ├─ polarization/
+│  │  └─ refraction_law/
+│  ├─ vibration_wave/                  # 振动与波
+│  │  ├─ simple_harmonic_motion/
+│  │  ├─ mechanical_wave/
+│  │  └─ wave_superposition/
+│  └─ modern_physics/                  # 近代物理
+│     ├─ photoelectric_effect/
+│     ├─ atomic_structure/
+│     ├─ half_life/
+│     └─ nuclear_reaction/
 ├─ index/
-│  ├─ catalog.json                  # 全库索引：标题、知识点、作者、许可、路径
-│  └─ catalog.md                    # 自动生成的人类可读目录
+│  ├─ catalog.json                     # 全库索引：标题、知识点、作者、许可、路径
+│  └─ catalog.md                       # 自动生成的人类可读目录
 ├─ docs/
-│  ├─ submission-guide.md           # 提交指南（详细版）
-│  ├─ review-checklist.md           # 审校清单
 │  └─ images/
 ├─ scripts/
-│  └─ build-catalog.ts              # 扫描课件目录生成 catalog
-├─ CONTRIBUTING.md                  # 贡献指南（必读）
+│  ├─ build-catalog.ts                 # 扫描课件目录生成 catalog
+│  └─ clone-with-history.sh            # 网络差时的分批克隆脚本
+├─ CONTRIBUTING.md                     # 贡献指南（必读）
 ├─ LICENSE
 └─ README.md
 ```
+
+学科下的子目录是**建议分类**，一个知识点一个目录；没有合适的就自己新建一个，PR 里说明一下即可。
 
 每个课件目录的命名格式是：
 
