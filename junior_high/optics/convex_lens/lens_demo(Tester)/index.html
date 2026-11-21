@@ -8,15 +8,18 @@
 const u = document.getElementById('u');
 const c = document.getElementById('c');
 const ctx = c.getContext('2d');
-u.addEventListener('input', () => {
+function draw() {
   for (let i = 0; i < 50000; i++) { Math.sqrt(i); }
+  const d = Number(u.value);
   ctx.clearRect(0, 0, 400, 200);
-  ctx.beginPath();
-  ctx.moveTo(20, 100);
-  ctx.lineTo(380, 100);
-  ctx.stroke();
-  ctx.beginPath();
-  ctx.arc(200, 100, 40, 0, Math.PI * 2);
-  ctx.stroke();
-});
+  ctx.beginPath(); ctx.moveTo(0, 100); ctx.lineTo(400, 100); ctx.stroke();
+  ctx.beginPath(); ctx.arc(200, 100, 30, 0, Math.PI * 2); ctx.stroke();
+  const h = 80 - d;
+  ctx.beginPath(); ctx.moveTo(60, 100); ctx.lineTo(60, 100 - h); ctx.stroke();
+  const v = 200 * d / (d - 20);
+  const x = 200 + v * 2;
+  ctx.beginPath(); ctx.moveTo(x, 100); ctx.lineTo(x, 100 + h * v / d); ctx.stroke();
+}
+u.addEventListener('input', draw);
+draw();
 </script></body></html>
