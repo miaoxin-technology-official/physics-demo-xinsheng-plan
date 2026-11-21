@@ -49,12 +49,12 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
             const issue_number = context.issue.number;
+            const headSha = context.payload.pull_request.head.sha;
 
             const PASS_LABEL = 'agent-reviewed-pass';
             const WARN_LABEL = 'agent-reviewed-warning';
             const RETURN_LABEL = 'agent-reviewed-return';
 
-            // PR-Agent 的结果是普通 PR 评论
             const comments = await github.paginate(
               github.rest.issues.listComments,
               { owner, repo, issue_number, per_page: 100 }
@@ -70,10 +70,34 @@ jobs:
             )[0];
             const text = latest ? latest.body : '';
 
-            // 只有「AI 判」的 5 级才能直接退回；「AI 提示」的 5 级降为 warning
-            const aiJudgeFive = /【L5】\s*【AI判】/.test(text);
+            // PR-Agent 会把历史 findings 一起贴出来，这里只统计当前提交上的问题，
+            // 避免旧问题让标签一直停在 warning/return。
+            let findings = [];
+            const jsonText = text.match(/\{"findings":[\s\S]*\}/);
+            if (jsonText) {
+              try {
+                const parsed = JSON.parse(jsonText[0]);
+                findings = (parsed.findings || []).filter(
+                  (f) => f.last_seen_head_sha === headSha
+                );
+              } catch (e) {
+                core.warning(`解析 findings JSON 失败：${e.message}`);
+              }
+            }
 
-            const levels = [...text.matchAll(/【L([1-5])】/g)].map((m) => Number(m[1]));
+            let levels;
+            let aiJudgeFive;
+
+            if (findings.length) {
+              levels = findings
+                .map((f) => Number((f.body.match(/【L([1-5])】/) || [])[1]))
+                .filter((n) => Number.isInteger(n));
+              aiJudgeFive = findings.some((f) => /【L5】\s*【AI判】/.test(f.body));
+            } else {
+              levels = [...text.matchAll(/【L([1-5])】/g)].map((m) => Number(m[1]));
+              aiJudgeFive = /【L5】\s*【AI判】/.test(text);
+            }
+
             const maxLevel = levels.length ? Math.max(...levels) : 0;
 
             let target;
@@ -85,7 +109,6 @@ jobs:
               target = PASS_LABEL;
             }
 
-            // 只增删这三个状态标签，绝不碰作者或其他人加的标签
             for (const name of [PASS_LABEL, WARN_LABEL, RETURN_LABEL]) {
               if (name === target) continue;
               try {
@@ -102,4 +125,6 @@ jobs:
               labels: [target],
             });
 
-            core.info(`AI判5级=${aiJudgeFive} 最高等级=${maxLevel} -> ${target}`);
+            core.info(
+              `当前提交 ${headSha.slice(0, 7)}：findings=${findings.length} AI判5级=${aiJudgeFive} 最高=${maxLevel} -> ${target}`
+            );
