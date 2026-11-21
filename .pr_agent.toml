@@ -1,0 +1,20 @@
+[config]
+model = "deepseek/deepseek-flash"
+fallback_models = ["deepseek/deepseek-flash"]
+max_model_tokens = 32000
+
+[github_action_config]
+auto_review = true
+auto_describe = true
+auto_improve = false
+
+[pr_reviewer]
+require_score_review = false
+num_max_findings = 10
+extra_instructions = """
+按 docs/review-standards.md 的 5 级标准审阅，重点是：
+5 级（阻断）：目录层级不是 <学段>/<学科>/<知识点>/<课件名>(<作者>)、目录名含空格或中文括号、缺 HTML/README.md/LICENSE、提交 .git 或可执行文件、无许可或 README 与 LICENSE 许可矛盾、有登录/付费门槛、误改 .github 或 scripts。
+4 级（重要）：没有交互、README 缺对应知识点/作者/版权、说明与课件不符、素材来源不明、AI 生成未声明。
+3 级及以下只提示。物理正确性和版权归属只给线索，不下结论。
+所有问题请给出文件路径和修改建议。
+"""
