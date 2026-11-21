@@ -458,7 +458,7 @@ README 里也写一句版权说明，和 LICENSE 对上就行。
 1. 打开项目主页（在 GitHub 上搜索项目名，或点维护者给你的链接）
 2. 看页面**右上角**，找到 **Fork** 按钮（一个分叉的小图标），点它
 3. 页面问你要 fork 到哪里，直接点 **Create fork**
-4. 等几秒钟，你会跳转到 `你的用户名/open-physics-anim-collection`——这就是你自己的副本了
+4. 等几秒钟，你会跳转到 `你的用户名/physics-demo-xinsheng-plan`——这就是你自己的副本了
 
 > 看一眼页面左上角的仓库名，前面应该是**你的用户名**，不是项目组织的名字。这说明你操作的是自己的副本，放心改。
 
@@ -832,14 +832,14 @@ git config --global user.email "你的邮箱"
 2. 打开终端，执行：
 
 ```bash
-git clone https://github.com/你的用户名/open-physics-anim-collection.git
-cd open-physics-anim-collection
+git clone https://github.com/你的用户名/physics-demo-xinsheng-plan.git
+cd physics-demo-xinsheng-plan
 ```
 
 3. 添加上游仓库（方便以后同步主项目更新）：
 
 ```bash
-git remote add upstream https://github.com/项目组织/open-physics-anim-collection.git
+git remote add upstream https://github.com/miaoxin-technology-official/physics-demo-xinsheng-plan.git
 ```
 
 #### 6.3.3 创建分支
