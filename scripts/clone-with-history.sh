@@ -5,7 +5,8 @@
 # 特性：
 #   - 每层只传一小段，网络差也不容易整单失败；
 #   - 成功一层自动继续下一层；
-#   - 某层失败就停下并保留进度，重新运行同一条命令会接着补；
+#   - 某层失败会自动把每层条数减半重试（100 → 50 → … → 1），减到 1 条仍失败才停下；
+#   - 停下后进度保留，重新运行同一条命令会接着补；
 #   - 补完自动确认历史是否完整。
 #
 # 用法：
@@ -116,25 +117,35 @@ while is_shallow; do
   say ""
   say "第 $ROUND 层：再往前补 $STEP 条提交（当前 $before 条）"
 
+  # 同一层内失败就减小步长再试：100 -> 50 -> 25 ... -> 1，
+  # 每一步要传的包更小，成功率更高；到 1 条还失败才停下。
   ok=0
-  i=1
-  while [ "$i" -le "$RETRIES" ]; do
-    if [ -n "$BRANCH" ]; then
-      git fetch --deepen="$STEP" origin "$BRANCH" --progress && { ok=1; break; }
-    else
-      git fetch --deepen="$STEP" --progress && { ok=1; break; }
-    fi
-    say "这一层失败（第 $i 次），等 $((i * 3)) 秒重试……"
-    sleep $((i * 3))
-    i=$((i + 1))
-  done
+  while [ "$ok" -eq 0 ]; do
+    i=1
+    while [ "$i" -le "$RETRIES" ]; do
+      if [ -n "$BRANCH" ]; then
+        git fetch --deepen="$STEP" origin "$BRANCH" --progress && { ok=1; break; }
+      else
+        git fetch --deepen="$STEP" --progress && { ok=1; break; }
+      fi
+      say "用 $STEP 条/层失败（第 $i 次），等 $((i * 3)) 秒重试……"
+      sleep $((i * 3))
+      i=$((i + 1))
+    done
 
-  if [ "$ok" -ne 1 ]; then
-    say ""
-    say "这一层没成功。已经下载的内容都保留着，不会丢。"
-    say "等网络好一点，重新运行同一条命令，就会从当前进度继续。"
-    exit 1
-  fi
+    if [ "$ok" -eq 0 ]; then
+      if [ "$STEP" -le 1 ]; then
+        say ""
+        say "已经减到每次 1 条还是失败。进度都保留着，不会丢。"
+        say "等网络好一点，重新运行同一条命令，就会从当前进度继续。"
+        exit 1
+      fi
+      STEP=$((STEP / 2))
+      [ "$STEP" -lt 1 ] && STEP=1
+      say "把每层减半到 $STEP 条，继续重试这一层……"
+      sleep 3
+    fi
+  done
 
   after=$(git rev-list --count HEAD 2>/dev/null || echo 0)
   if [ "$after" -le "$before" ]; then
