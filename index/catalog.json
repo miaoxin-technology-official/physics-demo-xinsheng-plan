@@ -1,15 +1,43 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/build-catalog.ts",
-  "generatedAt": "2026-10-31T13:46:37.051Z",
+  "generatedAt": "2026-11-21T10:58:27.897Z",
   "stats": {
-    "total": 0,
-    "byStage": {},
-    "bySubject": {},
+    "total": 1,
+    "byStage": {
+      "初中": 1
+    },
+    "bySubject": {
+      "初中/光学": 1
+    },
     "missingReadme": 0,
     "missingLicense": 0,
     "missingKnowledgePoint": 0,
     "warnings": 0
   },
-  "items": []
+  "items": [
+    {
+      "id": "junior_high/optics/convex_lens/convex_lens_show(Charles_An)",
+      "stage": "junior_high",
+      "stageLabel": "初中",
+      "subject": "optics",
+      "subjectLabel": "光学",
+      "topic": "convex_lens",
+      "title": "凸透镜成像规律演示",
+      "knowledgePoint": "初中物理 · 光学 · 凸透镜成像规律",
+      "grade": "八年级上",
+      "author": "Charles An（喵芯科技创始人）",
+      "authorSlug": "Charles_An",
+      "license": {
+        "spdx": "MIT",
+        "name": "MIT",
+        "file": "junior_high/optics/convex_lens/convex_lens_show(Charles_An)/LICENSE"
+      },
+      "path": "junior_high/optics/convex_lens/convex_lens_show(Charles_An)",
+      "entry": "junior_high/optics/convex_lens/convex_lens_show(Charles_An)/index.html",
+      "hasReadme": true,
+      "hasLicense": true,
+      "hasAssets": false
+    }
+  ]
 }
