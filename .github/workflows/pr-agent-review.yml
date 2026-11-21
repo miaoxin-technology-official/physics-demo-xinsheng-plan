@@ -51,33 +51,63 @@ jobs:
             const issue_number = context.issue.number;
 
             const PASS_LABEL = 'agent-reviewed-pass';
+            const WARN_LABEL = 'agent-reviewed-warning';
             const RETURN_LABEL = 'agent-reviewed-return';
 
-            // 获取该 PR 的所有行内审查评论
+            // PR-Agent 的结果是以普通 PR 评论发布的，不是行内 review comment
             const comments = await github.paginate(
-              github.rest.pulls.listReviewComments,
-              { owner, repo, pull_number: issue_number, per_page: 100 }
+              github.rest.issues.listComments,
+              { owner, repo, issue_number, per_page: 100 }
             );
 
-            // 只统计 Bot 留下的行内评论（PR-Agent 发现问题时会发 inline comment）
-            const botComments = comments.filter(c => c.user && c.user.type === 'Bot');
-            const hasFindings = botComments.length > 0;
+            const reviews = comments.filter((c) =>
+              c.user &&
+              c.user.type === 'Bot' &&
+              /pr-agent:review:full|PR Reviewer Guide/.test(c.body || '')
+            );
+            const text = reviews.map((c) => c.body).join('\n');
 
-            const addLabel = hasFindings ? RETURN_LABEL : PASS_LABEL;
-            const removeLabel = hasFindings ? PASS_LABEL : RETURN_LABEL;
+            let level = null;
 
-            // 移除旧状态标签，避免同时存在
-            try {
-              await github.rest.issues.removeLabel({
-                owner, repo, issue_number, name: removeLabel
-              });
-            } catch (e) {
-              if (e.status !== 404) throw e;
+            // 优先读 PR-Agent 输出的汇总行
+            const direct = text.match(/REVIEW_MAX_LEVEL:\s*([1-5])/);
+            if (direct) level = Number(direct[1]);
+
+            // 其次读每条问题的【L5】标记
+            if (level === null) {
+              const tags = [...text.matchAll(/【L([1-5])】/g)].map((m) => Number(m[1]));
+              if (tags.length) level = Math.max(...tags);
             }
 
-            // 添加当前状态标签
+            // 最后兼容中文写法「（5 级阻断）」
+            if (level === null) {
+              const cn = [...text.matchAll(/[（(]\s*([1-5])\s*级/g)].map((m) => Number(m[1]));
+              if (cn.length) level = Math.max(...cn);
+            }
+
+            if (level === null) {
+              core.warning('没有从 PR-Agent 评论里解析出等级，按 1 级处理');
+              level = 1;
+            }
+
+            // 5 级 -> return；最高 3-4 级 -> warning；最高 1-2 级 -> pass
+            const target =
+              level === 5 ? RETURN_LABEL : level >= 3 ? WARN_LABEL : PASS_LABEL;
+
+            for (const name of [PASS_LABEL, WARN_LABEL, RETURN_LABEL]) {
+              if (name === target) continue;
+              try {
+                await github.rest.issues.removeLabel({ owner, repo, issue_number, name });
+              } catch (e) {
+                if (e.status !== 404) throw e;
+              }
+            }
+
             await github.rest.issues.addLabels({
-              owner, repo, issue_number, labels: [addLabel]
+              owner,
+              repo,
+              issue_number,
+              labels: [target],
             });
 
-            core.info(`Applied label: ${addLabel}`);
+            core.info(`最高等级 ${level} -> ${target}`);
