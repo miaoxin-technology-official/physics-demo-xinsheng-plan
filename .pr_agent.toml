@@ -14,6 +14,9 @@ auto_improve = false
 [pr_reviewer]
 require_score_review = false
 num_max_findings = 20
+# 关闭 PR-Agent 自带的标签，避免和工作流的三个状态标签混在一起
+enable_review_labels_security = false
+enable_review_labels_effort = false
 
 extra_instructions = """
 你是初高中物理课件仓库的 PR 初审助手。只读、只评论，不修改代码、不合并。
