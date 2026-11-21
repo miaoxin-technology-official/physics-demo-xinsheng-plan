@@ -743,7 +743,7 @@ Miaoxin Git GUI 是一个 Windows 小软件，装好以后用鼠标点几下就�
 1. 第一次需要先告诉软件「主仓库在哪」：「远程」页点「添加远程」，名称填 `upstream`，地址填：
 
    ```text
-   https://github.com/miaoxintechnology/physics-demo-xinsheng-plan.git
+   https://github.com/miaoxin-technology-official/physics-demo-xinsheng-plan.git
    ```
 
 2. 点「获取」，把主仓库的最新内容拉下来；
@@ -762,6 +762,55 @@ Miaoxin Git GUI 是一个 Windows 小软件，装好以后用鼠标点几下就�
 - 冲突：合并时如果有冲突，会在「改动」页单独列出，逐个处理就行。
 
 > 界面上每个按钮的详细说明，见发布页随附的《Miaoxin Git GUI 使用说明》。
+
+#### 6.2.10 克隆卡住怎么办
+
+国内直连 GitHub 时，克隆常常卡在 90% 多一点不动。这不是仓库太大（这个仓库本身只有几 MB），而是传到最后一段时连接断了，软件会一直等，看起来就像死掉。
+
+按下面三步来，都能保住**完整历史**：
+
+**第一步：改设置后重试**
+
+在软件右侧终端里执行（整段复制，执行一次就行）：
+
+```bash
+git config --global http.version HTTP/1.1
+git config --global http.postBuffer 524288000
+git config --global http.lowSpeedLimit 1000
+git config --global http.lowSpeedTime 60
+```
+
+然后**删掉克隆到一半的文件夹**（这一步很重要，半成品目录会让重试继续失败），再重新克隆一次。
+
+**第二步：分批把历史取下来**
+
+还卡的话，改成「先下载最新一版，再一点点往前补历史」。这样每次只传一小段，断了重新执行同一条命令就行，已经拿到的部分不会丢：
+
+```bash
+git clone --depth 1 https://github.com/你的用户名/physics-demo-xinsheng-plan.git 课件仓库
+cd 课件仓库
+git fetch --deepen=100
+```
+
+`git fetch --deepen=100` 成功后再执行一次，反复几次，直到它提示没有更多提交；最后执行：
+
+```bash
+git fetch --unshallow
+```
+
+看到 `--unshallow` 执行成功，就说明历史已经补齐，之后正常提交、推送即可。
+
+**第三步：换条线路**
+
+- 用 SSH 走 443 端口（需要先在软件「设置 → SSH」里配好密钥）：
+
+  ```bash
+  git clone ssh://git@ssh.github.com:443/你的用户名/physics-demo-xinsheng-plan.git
+  ```
+
+- 或者连上代理 / VPN 再克隆，这是最稳的办法。三步都试过还是不行，基本可以确定是网络对 GitHub 的限制，不用再反复重装软件。
+
+> 只想快速看看文件、不打算提交的，可以用 `git clone --depth 1 ...`，几秒钟就好；但它没有历史记录，投稿请用上面的办法。
 
 ### 6.3 路线 C：在电脑上用命令行（进阶）
 
