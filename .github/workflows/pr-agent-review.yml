@@ -73,6 +73,7 @@ jobs:
             // PR-Agent 会把历史 findings 一起贴出来，这里只统计当前提交上的问题，
             // 避免旧问题让标签一直停在 warning/return。
             let findings = [];
+            let parsedOk = false;
             const jsonText = text.match(/\{"findings":[\s\S]*\}/);
             if (jsonText) {
               try {
@@ -80,6 +81,7 @@ jobs:
                 findings = (parsed.findings || []).filter(
                   (f) => f.last_seen_head_sha === headSha
                 );
+                parsedOk = true;
               } catch (e) {
                 core.warning(`解析 findings JSON 失败：${e.message}`);
               }
@@ -88,7 +90,9 @@ jobs:
             let levels;
             let aiJudgeFive;
 
-            if (findings.length) {
+            // 有 JSON 就只信 JSON：评论正文里可能还挂着历史问题，
+            // 拿它回退会把已解决的问题重新算进来。
+            if (parsedOk) {
               levels = findings
                 .map((f) => Number((f.body.match(/【L([1-5])】/) || [])[1]))
                 .filter((n) => Number.isInteger(n));
