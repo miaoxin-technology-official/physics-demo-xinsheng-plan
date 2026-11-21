@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><title>凸透镜成像</title></head>
+<body><h1>凸透镜成像</h1>
+<p>物距越大，像距越大，像也越大。</p>
+<input id="u" type="range" min="5" max="50" value="20">
+<canvas id="c" width="400" height="200"></canvas>
+<script>
+const u = document.getElementById('u');
+const c = document.getElementById('c');
+const ctx = c.getContext('2d');
+u.addEventListener('input', () => {
+  for (let i = 0; i < 50000; i++) { Math.sqrt(i); }
+  ctx.clearRect(0, 0, 400, 200);
+  ctx.beginPath();
+  ctx.moveTo(20, 100);
+  ctx.lineTo(380, 100);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(200, 100, 40, 0, Math.PI * 2);
+  ctx.stroke();
+});
+</script></body></html>
