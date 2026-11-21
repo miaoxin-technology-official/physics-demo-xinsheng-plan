@@ -65,7 +65,11 @@ jobs:
               c.user.type === 'Bot' &&
               /pr-agent:review:full|PR Reviewer Guide/.test(c.body || '')
             );
-            const text = reviews.map((c) => c.body).join('\n');
+            // 只取最新一条，避免旧评论里的等级污染本次判定
+            const latest = reviews.sort(
+              (a, b) => new Date(b.created_at) - new Date(a.created_at)
+            )[0];
+            const text = latest ? latest.body : '';
 
             let level = null;
 
