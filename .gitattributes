@@ -1,0 +1,2 @@
+# 统一换行符，避免 Windows 上把脚本转成 CRLF 后 bash 无法执行
+*.sh text eol=lf
