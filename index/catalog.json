@@ -1,14 +1,13 @@
 {
   "schemaVersion": 1,
   "generatedBy": "scripts/build-catalog.ts",
-  "generatedAt": "2026-11-28T06:19:57.808Z",
+  "generatedAt": "2026-11-28T06:21:27.643Z",
   "stats": {
-    "total": 2,
+    "total": 1,
     "byStage": {
-      "初中": 2
+      "初中": 1
     },
     "bySubject": {
-      "初中/力学": 1,
       "初中/光学": 1
     },
     "missingReadme": 0,
@@ -17,29 +16,6 @@
     "warnings": 0
   },
   "items": [
-    {
-      "id": "junior_high/mechanics/lever_balance/_probe_catalog(Test_Bot)",
-      "stage": "junior_high",
-      "stageLabel": "初中",
-      "subject": "mechanics",
-      "subjectLabel": "力学",
-      "topic": "lever_balance",
-      "title": "目录生成探针",
-      "knowledgePoint": "初中物理 · 力学 · 杠杆平衡",
-      "grade": "八年级下",
-      "author": "Test Bot",
-      "authorSlug": "Test_Bot",
-      "license": {
-        "spdx": "MIT",
-        "name": "MIT",
-        "file": "junior_high/mechanics/lever_balance/_probe_catalog(Test_Bot)/LICENSE"
-      },
-      "path": "junior_high/mechanics/lever_balance/_probe_catalog(Test_Bot)",
-      "entry": "junior_high/mechanics/lever_balance/_probe_catalog(Test_Bot)/index.html",
-      "hasReadme": true,
-      "hasLicense": true,
-      "hasAssets": false
-    },
     {
       "id": "junior_high/optics/convex_lens/convex_lens_show(Charles_An)",
       "stage": "junior_high",
