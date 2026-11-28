@@ -202,7 +202,7 @@ senior_high/electromagnetism/electromagnetic_induction/induction_lab(Lili_Zhao)/
 
 ### 4.2 README.md 里写什么
 
-每个课件的 `README.md` 用中文写，至少包含这些：
+每个课件的 `README.md` 用中文写，可以包含这些：
 
 1. **课件介绍**：这个动画演示什么物理现象、对应哪个知识点。
 2. **适用年级**：比如八年级上、高二选择性必修二。**高中课件请写清楚是必修、选择性必修还是选修**。
@@ -218,6 +218,8 @@ senior_high/electromagnetism/electromagnetic_induction/induction_lab(Lili_Zhao)/
 
 下面是初中的例子。**高中课件按同样的结构写**，把知识点、年级、交互换成高中内容就行。
 
+> 注：不使用以下模板也可以，但是至少有**课件介绍**、**适用年级**、**作者和版权说明**、**使用方法**、**素材来源**、**AI 辅助说明**（如果使用AI）
+
 ```markdown
 # 凸透镜成像演示
 
@@ -229,6 +231,7 @@ senior_high/electromagnetism/electromagnetic_induction/induction_lab(Lili_Zhao)/
 - **适用年级**：八年级上
 - **作者**：张三（San Zhang）
 - **版权说明**：Copyright (c) 2025 张三。本课件采用 MIT 许可证，详见同目录 LICENSE 文件。
+- **创作日期**：2025年6月1日
 
 ## 使用方法
 
@@ -281,6 +284,7 @@ MIT License，详见同目录 LICENSE 文件。
 - **适用年级**：高二选择性必修二
 - **作者**：赵丽丽（Lili Zhao）
 - **版权说明**：Copyright (c) 2025 赵丽丽。本课件采用 MIT 许可证，详见同目录 LICENSE 文件。
+- **创作日期**：2025年6月1日
 
 ## 使用方法
 
@@ -1296,7 +1300,7 @@ Issue 里有两个触发词，别用混了：
 
 > AI 也会出错，尤其是物理结论和细节规则。**以 README、CONTRIBUTING 和审校者的意见为准**；发现 AI 答错，直接在 Issue 里指出来即可。
 
-再次感谢你的贡献。**初中高中都欢迎，谁都可以做，谁都可以交，没有合适的主题就自己开一个**，这个库靠每一位贡献者一点点长起来。慢慢来，不着急 🌱
+再次感谢你的贡献。**初中高中都欢迎，谁都可以做，谁都可以交，没有合适的主题就自己开一个**，这个库靠每一位贡献者一点点长起来。
 
 Miaoxin Technology
 
