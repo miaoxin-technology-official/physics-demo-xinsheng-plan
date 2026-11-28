@@ -198,7 +198,7 @@ senior_high/electromagnetism/electromagnetic_induction/induction_lab(Lili_Zhao)/
 | **VS Code**   | 免费，装 Markdown 插件后可用    | 开发者         |
 | **记事本**       | 系统自带，能写，但排版效果要预览才知道    | 应急用         |
 
-> **特别推荐 [Mark Text](https://www.marktext.cc/)**：免费、开源、跨平台（Windows / macOS / Linux），左边写、右边实时预览，操作非常直观，不需要背 Markdown 语法也能看懂效果。
+> **特别推荐 [Mark Text](https://www.marktext.app/)**：免费、开源、跨平台（Windows / macOS / Linux），左边写、右边实时预览，操作非常直观，不需要背 Markdown 语法也能看懂效果。
 
 ### 4.2 README.md 里写什么
 
@@ -1087,7 +1087,7 @@ git add "junior_high/optics/convex_lens/convex_lens_show(San_Zhang)"
 网页操作不受影响。
 
 **Q17：写 README.md 用什么工具比较好？**
-推荐 [Mark Text](https://www.marktext.cc/)，免费开源、跨平台、左边写右边实时预览，操作很直观，不需要学 Markdown 语法也能看懂效果。不想装软件的话，直接用 GitHub 网页编辑也行。
+推荐 [Mark Text](https://www.marktext.app/)，免费开源、跨平台、左边写右边实时预览，操作很直观，不需要学 Markdown 语法也能看懂效果。不想装软件的话，直接用 GitHub 网页编辑也行。
 
 **Q18：LICENSE 里年份和作者怎么填？**
 用第 5.1 节的 MIT 模板，把 `[year]` 改成当前年份，把 `[fullname]` 改成你的名字，正常写空格就好，比如 `Copyright (c) 2025 San Zhang` 或 `Copyright (c) 2025 张三`。README 里的版权说明也要和它一致。
